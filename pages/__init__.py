@@ -12,9 +12,5 @@
 from .root import root_page
 from .Overview.Overview import Overview, data
 from .Analysis.Analysis import Analysis
-<<<<<<< HEAD
 from .Predictions.Predictions import Predictions, selected_holiday, selected_level, selected_scenario, dn_holiday, dn_result
 from .Visualisation.Visualisation import Visualisation
-=======
-from .Predictions.Predictions import Predictions
->>>>>>> 30fd282 (proposition de changement)

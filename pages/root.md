@@ -21,10 +21,6 @@
 <|navbar|>
 </center>
 
-<<<<<<< HEAD
 <|Data|expandable|expanded=False|
-=======
-<|Data|expandable|
->>>>>>> 30fd282 (proposition de changement)
 <|{data}|table|>
 |>

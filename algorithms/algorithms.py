@@ -16,36 +16,22 @@ The functions will be imported by the __init__.py file in this folder.
 """
 
 import pandas as pd
-<<<<<<< HEAD
 from sklearn.ensemble import GradientBoostingRegressor
 import datetime as dt
 import numpy as np
 from pmdarima import auto_arima
 from sklearn.linear_model import LinearRegression
 
-=======
-from sklearn.linear_model import LinearRegression
-import datetime as dt
-import numpy as np
-from pmdarima import auto_arima
->>>>>>> 30fd282 (proposition de changement)
 
 
 def add_features(data):
     dates = pd.to_datetime(data["Date"])
-<<<<<<< HEAD
     data["Months"] = (dates.dt.month - 6)/12
     data["Days"] = (dates.dt.isocalendar().day - 15)/30
     data["Week"] = (dates.dt.isocalendar().week - 26)/52
     data["Day of week"] = (dates.dt.dayofweek - 3.5)/7
     # Number of days after 30 December 2020
     data["Index"] = (dates - dt.datetime(2020, 12, 30)).dt.days
-=======
-    data["Months"] = dates.dt.month
-    data["Days"] = dates.dt.isocalendar().day
-    data["Week"] = dates.dt.isocalendar().week
-    data["Day of week"] = dates.dt.dayofweek
->>>>>>> 30fd282 (proposition de changement)
     return data
 
 def preprocess(initial_data, holiday, level):
@@ -58,14 +44,8 @@ def preprocess(initial_data, holiday, level):
     final_data = data[['Date','Total']]
     final_data = add_features(final_data)
 
-<<<<<<< HEAD
     if holiday is not None:
         final_data['Total'] *= np.mean(holiday)/level
-=======
-    final_data['Total'] = final_data['Total']*level
-    if holiday:
-        final_data['Total'] *= 0.8
->>>>>>> 30fd282 (proposition de changement)
 
     date = final_data['Date'].max()
     return final_data, date
@@ -81,7 +61,6 @@ def train_arima(train_data):
     model.fit(train_data['Total'])
     return model
 
-<<<<<<< HEAD
 def forecast(model, n_periods):
     predictions = model.predict(n_periods=n_periods)
     return np.array(predictions)
@@ -102,29 +81,11 @@ def train_xgboost(train_data):
 def forecast_xgboost(model, date, n_periods):
     dates = pd.to_datetime([date + dt.timedelta(days=i)
                             for i in range(n_periods)])
-=======
-def forecast(model):
-    predictions = model.predict(n_periods=60)
-    return np.array(predictions)
-
-def train_linear_regression(train_data):    
-    y = train_data['Total']
-    X = train_data.drop(['Total','Date'], axis=1)
-    
-    model = LinearRegression()
-    model.fit(X,y)
-    return model
-
-def forecast_linear_regression(model, date):
-    dates = pd.to_datetime([date + dt.timedelta(days=i)
-                            for i in range(60)])
->>>>>>> 30fd282 (proposition de changement)
     X = add_features(pd.DataFrame({"Date":dates}))
     X.drop('Date', axis=1, inplace=True)
     predictions = model.predict(X)
     return predictions
 
-<<<<<<< HEAD
 def train_linear_regression(train_data):
     # Extract the target variable 'Total' and features
     y = train_data['Total']
@@ -159,10 +120,6 @@ def forecast_linear_regression(model, start_date, years):
     return predictions
 
 def concat(final_data, predictions_arima, predictions_xgboost, predictions_regression):
-=======
-
-def concat(final_data, predictions_arima, predictions_linear_regression):
->>>>>>> 30fd282 (proposition de changement)
     date = final_data['Date'].max()
 
     def  _convert_predictions(final_data, predictions, date, label='Predictions'):
@@ -175,7 +132,6 @@ def concat(final_data, predictions_arima, predictions_linear_regression):
         return final_data.merge(predictions, on="Date", how="outer")
 
     result_arima = _convert_predictions(final_data, predictions_arima, date, label='ARIMA')
-<<<<<<< HEAD
     result_xgboost = _convert_predictions(final_data, predictions_xgboost, date, label='Xgboost')
     result_regression = _convert_predictions(final_data, predictions_regression, date, label='Regression')
     
@@ -187,7 +143,3 @@ def concat(final_data, predictions_arima, predictions_linear_regression):
     result = result.sort_values(by='Date')
     
     return result
-=======
-    result_linear_regression = _convert_predictions(final_data, predictions_linear_regression, date, label='Linear Regression')
-    return result_arima.merge(result_linear_regression, on=["Date", 'Total'], how="outer").sort_values(by='Date')
->>>>>>> 30fd282 (proposition de changement)

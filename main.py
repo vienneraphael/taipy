@@ -21,12 +21,8 @@ pages = {
     "/": root_page,
     "Overview": Overview,
 	"Analysis": Analysis,
-<<<<<<< HEAD
 	"Predictions": Predictions,
     "Visualisation": Visualisation
-=======
-	"Predictions": Predictions
->>>>>>> 30fd282 (proposition de changement)
 }
 
 
@@ -44,9 +40,5 @@ if __name__ == "__main__":
     # #############################################################################
 
     gui = Gui(pages=pages)
-<<<<<<< HEAD
     gui.run(title="Sales Prediction", port=2452)
-=======
-    gui.run(title="Sales", use_reloader=True, port=2452)
->>>>>>> 30fd282 (proposition de changement)
     

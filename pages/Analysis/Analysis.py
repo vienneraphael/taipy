@@ -20,18 +20,11 @@ import pandas as pd
 import plotly.express as px
 import taipy.gui.builder as tgb
 
-<<<<<<< HEAD
 # Assuming data is loaded from 'data/modified_supermarkt_sales_plus.csv'
 #data = pd.read_csv('data/modified_supermarkt_sales_plus.csv')
 data = pd.read_csv('data/modified_supermarkt_sales_plus_two_years.csv')
 
 data['Date'] = pd.to_datetime(data['Date'], format="%Y-%m-%d")
-=======
-# Assuming data is loaded from 'data/supermarkt_sales_plus.csv'
-data = pd.read_csv('data/supermarkt_sales_plus.csv')
-
-data['Date'] = pd.to_datetime(data['Date'])
->>>>>>> 30fd282 (proposition de changement)
 data['Month_Year'] = data['Date'].dt.to_period('M').dt.to_timestamp()
     
 
@@ -50,10 +43,6 @@ fig_city = create_perc_fig(data, 'City')
 fig_gender = create_perc_fig(data, 'Gender')
 fig_customer_type = create_perc_fig(data, 'Customer_type')
 
-<<<<<<< HEAD
-=======
-import time
->>>>>>> 30fd282 (proposition de changement)
 
 def on_change(state, var_name, var_value):
     if var_name in ['city', 'customer_type', 'gender']:
@@ -73,10 +62,6 @@ customer_type = ["Normal", "Member"]
 gender = ["Male", "Female"]
 city = ["Bangkok", "Chiang Mai", "Vientiane", "Luang Prabang"]
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 30fd282 (proposition de changement)
 with tgb.Page() as Analysis:   
     with tgb.layout(columns="1 1 1"):
         tgb.selector(value="{customer_type}", lov=customer_type, multiple=True, dropdown=True, class_name="fullwidth", label="Customer Type")
@@ -89,9 +74,3 @@ with tgb.Page() as Analysis:
         tgb.chart(figure="{fig_city}")
         tgb.chart(figure="{fig_gender}")
         tgb.chart(figure="{fig_product_line}")
-<<<<<<< HEAD
-        
-=======
-        
-
->>>>>>> 30fd282 (proposition de changement)
